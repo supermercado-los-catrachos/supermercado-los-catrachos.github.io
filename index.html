@@ -25,7 +25,6 @@
             --btn-bg: #25d366;
             --btn-hover: #20b859;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            --footer-bg: #e9ecef;
             --badge-bg: #ffc107;
             --badge-text: #212529;
             --nav-bg: #004d40;
@@ -40,7 +39,6 @@
             --btn-bg: #128c7e;
             --btn-hover: #075e54;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            --footer-bg: #1a1a2a;
             --badge-bg: #e6a700;
             --badge-text: #121212;
             --nav-bg: #00251a;
@@ -53,8 +51,8 @@
             overflow-x: hidden;
         }
 
-        /* ========== PANTALLA DE BIENVENIDA (NUEVA) ========== */
-        .welcome-screen {
+        /* ========== PANTALLA DE BIENVENIDA (FORZADA) ========== */
+        #welcomeScreen {
             position: fixed;
             top: 0;
             left: 0;
@@ -65,15 +63,10 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
+            z-index: 99999; /* Máxima prioridad para cubrir todo */
             color: white;
             text-align: center;
             padding: 20px;
-            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-        /* Clase para ocultar la pantalla deslizándola hacia arriba */
-        .welcome-screen.hidden {
-            transform: translateY(-100vh);
         }
         .welcome-logo-circle {
             width: 100px;
@@ -87,13 +80,11 @@
             font-weight: bold;
             color: #ffc107;
             margin-bottom: 30px;
-            box-shadow: 0 0 15px rgba(255, 193, 7, 0.2);
         }
         .welcome-screen h1 {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         .welcome-screen p {
             font-size: 1.2rem;
@@ -117,17 +108,12 @@
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: transform 0.2s, background-color 0.2s;
         }
         .btn-enter:hover {
             background-color: #e6a700;
-            transform: scale(1.05);
         }
 
-        /* ========== Navegación superior ========== */
+        /* ========== CONTENIDO TIENDA ========== */
         .top-nav {
             background: var(--nav-bg);
             color: white;
@@ -135,7 +121,6 @@
             position: sticky;
             top: 0;
             z-index: 300;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         .nav-container {
             max-width: 1200px;
@@ -144,21 +129,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
-            flex-wrap: wrap;
         }
-        .logo {
-            font-size: 1.3rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .logo i { color: var(--badge-bg); }
-        .nav-controls {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
+        .logo { font-size: 1.3rem; font-weight: bold; }
+        .nav-controls { display: flex; gap: 12px; align-items: center; }
         .dark-toggle-nav, .cart-icon-nav {
             background: rgba(255,255,255,0.2);
             border: none;
@@ -167,14 +140,8 @@
             padding: 8px 12px;
             border-radius: 40px;
             cursor: pointer;
-            transition: 0.2s;
         }
-        .dark-toggle-nav:hover, .cart-icon-nav:hover {
-            background: rgba(255,255,255,0.4);
-        }
-        .cart-icon-nav {
-            position: relative;
-        }
+        .cart-icon-nav { position: relative; }
         #cartCountBadgeNav {
             position: absolute;
             top: -5px;
@@ -190,34 +157,15 @@
             justify-content: center;
             font-weight: bold;
         }
-        /* ========== Header principal ========== */
         .main-header {
             background-color: var(--header-bg);
             color: var(--header-text);
             text-align: center;
             padding: 40px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .logo-area {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .logo-area i {
-            font-size: 50px;
-            background: white;
-            border-radius: 50%;
-            padding: 12px;
-            color: #0056b3;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-        /* Buscador sticky */
         .search-container {
             display: flex;
             justify-content: center;
-            margin: 0;
             padding: 15px 20px;
             position: sticky;
             top: 52px;
@@ -233,91 +181,74 @@
             border: 1px solid var(--border);
             background: var(--bg-card);
             color: var(--text-primary);
-            box-shadow: var(--shadow);
-            outline: none;
         }
-        /* Contenido Principal y Categorías */
-        .main-content {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .category-section {
-            margin-bottom: 30px;
-            background: var(--bg-card);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-        .category-header {
-            background: linear-gradient(135deg, var(--header-bg), var(--nav-bg));
-            color: white;
-            padding: 15px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.3rem;
-            font-weight: bold;
-        }
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-            padding: 25px;
-        }
-        .category-content.collapsed .products-grid {
-            display: none;
-        }
-        /* Tarjetas de Productos */
-        .product-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: var(--shadow);
-        }
-        .product-card i.prod-icon {
-            font-size: 3.5rem;
-            margin: 15px 0;
-            color: var(--header-bg);
-        }
-        .product-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-        .product-price {
-            color: var(--price-color);
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin: 10px 0;
-        }
-        .btn-add {
-            background-color: var(--btn-bg);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-        }
-        .btn-add:hover {
-            background-color: var(--btn-hover);
-        }
-        /* Botón de enviar pedido flotante */
-        .btn-whatsapp-order {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #25d366;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            display: flex;
+        .main-content { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .category-section { margin-bottom: 30px; background: var(--bg-card); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
+        .category-header { background: linear-gradient(135deg, var(--header-bg), var(--nav-bg)); color: white; padding: 15px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; font-weight: bold; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 25px; }
+        .category-content.collapsed .products-grid { display: none; }
+        .product-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 15px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-card i.prod-icon { font-size: 3.5rem; margin: 15px 0; color: var(--header-bg); }
+        .product-price { color: var(--price-color); font-weight: bold; font-size: 1.2rem; margin: 10px 0; }
+        .btn-add { background-color: var(--btn-bg); color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+        .btn-add:hover { background-color: var(--btn-hover); }
+        .btn-whatsapp-order { position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 999; }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA DE BIENVENIDA (COMO TU IMAGEN) -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-logo-circle">LCH</div>
+        <h1>Supermercado Los Catrachos</h1>
+        <p>Calidad y frescura a tu alcance</p>
+        <div class="welcome-divider"></div>
+        <!-- Se añade el evento directamente en línea para garantizar su ejecución -->
+        <button class="btn-enter" onclick="document.getElementById('welcomeScreen').style.display='none';">Entrar</button>
+    </div>
+
+    <!-- CONTENIDO COMPLETO DE LA TIENDA -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="logo"><i class="fas fa-shopping-basket"></i> Los Catrachos</div>
+            <div class="nav-controls">
+                <button class="dark-toggle-nav" id="darkModeBtn"><i class="fas fa-moon"></i></button>
+                <div class="cart-icon-nav"><i class="fas fa-shopping-cart"></i><span id="cartCountBadgeNav">0</span></div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="main-header">
+        <h1>Supermercado Los Catrachos</h1>
+        <p>Calidad y frescura directo a tu hogar</p>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="¿Qué producto buscas hoy?...">
+    </div>
+
+    <main class="main-content">
+        <div class="category-section">
+            <div class="category-header" onclick="toggleCategory(this)">
+                <span><i class="fas fa-box"></i> Abarrotes</span>
+                <i class="fas fa-chevron-down arrow"></i>
+            </div>
+            <div class="category-content">
+                <div class="products-grid">
+                    <div class="product-card" data-name="arroz progreso">
+                        <i class="fas fa-seedling prod-icon"></i>
+                        <h3>Arroz Progreso (1 Lb)</h3>
+                        <p class="product-price">L. 15.00</p>
+                        <button class="btn-add" onclick="addToCart('Arroz Progreso', 15)">Agregar</button>
+                    </div>
+                    <div class="product-card" data-name="frijoles rojos de la hoya">
+                        <i class="fas fa-boxes prod-icon"></i>
+                        <h3>Frijoles Rojos (1 Lb)</h3>
+                        <p class="product-price">L. 35.00</p>
+                        <button class="btn-add" onclick="addToCart('Frijoles Rojos', 35)">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
