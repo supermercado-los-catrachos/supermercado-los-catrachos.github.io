@@ -5,93 +5,169 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supermercado Los Catrachos</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; }
-        header { background-color: #0056b3; color: white; text-align: center; padding: 25px 20px; }
-        header img { max-width: 120px; height: auto; border-radius: 50%; margin-bottom: 12px; background-color: white; padding: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .category-title { text-align: center; color: #0056b3; margin-top: 40px; font-size: 1.8rem; border-bottom: 3px solid #0056b3; display: inline-block; padding-bottom: 5px; width: 80%; margin-left: 10%; font-weight: bold; }
-        .container { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; gap: 20px; }
-        .card { background: white; border: 1px solid #ddd; border-radius: 8px; width: 230px; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .card img { max-width: 100%; height: 140px; object-fit: cover; border-radius: 6px; margin-bottom: 10px; background-color: #eaeaea; }
-        .price { color: #28a745; font-size: 1.3rem; font-weight: bold; margin: 10px 0; }
-        .btn-order { display: inline-block; background-color: #25d366; color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px; font-weight: bold; width: 85%; }
+        /* ========== ESTILOS BASE TOTALMENTE SEGUROS ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        /* ========== PANTALLA DE INICIO (IGUAL A TU IMAGEN) ========== */
+        .welcome-screen {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #004d40, #00796b);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .welcome-logo {
+            border: 2px solid #ffb300;
+            border-radius: 50%;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #ffb300;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+        }
+        .welcome-screen h1 {
+            font-size: 2.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .welcome-screen p {
+            font-size: 1.3rem;
+            color: #e0f2f1;
+        }
+        .welcome-line {
+            width: 200px;
+            height: 4px;
+            background-color: #ffb300;
+            border-radius: 2px;
+            margin: 15px auto 35px auto;
+        }
+        .btn-enter {
+            background-color: #ffb300;
+            color: #004d40;
+            padding: 15px 50px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .btn-enter:hover {
+            transform: scale(1.05);
+            background-color: #ffa000;
+        }
+
+        /* ========== CONTENIDO DE LA TIENDA ========== */
+        .store-section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .store-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            color: #004d40;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .product-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #212529;
+        }
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+        .btn-cart {
+            background-color: #25d366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <img src="logo.png" alt="Logo Supermercado Los Catrachos">
-    <h1>Supermercado Los Catrachos</h1>
-    <p>¡Calidad y frescura a tu alcance!</p>
-</header>
+    <!-- PANTALLA DE INICIO (ESTILO DE TU IMAGEN) -->
+    <div class="welcome-screen">
+        <div class="welcome-logo">LCH</div>
+        <h1>Supermercado Los Catrachos</h1>
+        <p>Calidad y frescura a tu alcance</p>
+        <div class="welcome-line"></div>
+        <!-- Enlace nativo HTML que baja la pantalla sin usar JavaScript -->
+        <a href="#tienda" class="btn-enter">
+            Entrar
+        </a>
+    </div>
 
-<!-- CATEGORÍA 1: ABARROTES -->
-<h2 class="category-title">Abarrotes y Granos Básicos</h2>
-<div class="container">
-    <div class="card"><img src="arroz.png" alt="Arroz"><h3>Arroz (lb)</h3><div class="price">L 13.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Arroz" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="frijoles-rojos.png" alt="Frijoles"><h3>Frijoles rojos (lb)</h3><div class="price">L 30.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Frijoles%20Rojos" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="azucar.png" alt="Azúcar"><h3>Azúcar (lb)</h3><div class="price">L 18.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Azúcar" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="sal.png" alt="Sal"><h3>Sal (lb)</h3><div class="price">L 12.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Sal" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="harina-maiz.png" alt="Maseca"><h3>Harina de maíz</h3><div class="price">L 20.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Harina%20de%20maíz" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="cafe-bolsa.png" alt="Café"><h3>Café bolsa</h3><div class="price">L 125.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Café%20bolsa" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="espagueti.png" alt="Espagueti"><h3>Espagueti</h3><div class="price">L 28.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Espagueti" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="avena.png" alt="Avena"><h3>Avena</h3><div class="price">L 45.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Avena" class="btn-order">Pedir por WhatsApp</a></div>
-</div>
+    <!-- SECCIÓN DE LA TIENDA -->
+    <div id="tienda" class="store-section">
+        <h2 class="store-title">Nuestros Productos</h2>
+        
+        <div class="products-grid">
+            <!-- Producto 1 -->
+            <div class="product-card">
+                <h3>Bananos Maduros</h3>
+                <div class="product-price">L. 25.00</div>
+                <button class="btn-cart" onclick="alert('¡Producto añadido!')">Añadir al Carrito</button>
+            </div>
 
-<!-- CATEGORÍA 2: FRUTAS Y VERDURAS -->
-<h2 class="category-title">Frutas y Verduras</h2>
-<div class="container">
-    <div class="card"><img src="manzana.png" alt="Manzana"><h3>Manzana (lb)</h3><div class="price">L 44.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Manzana" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="banano.png" alt="Banano"><h3>Banano (lb)</h3><div class="price">L 9.50</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Banano" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="papaya.png" alt="Papaya"><h3>Papaya (lb)</h3><div class="price">L 12.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Papaya" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="pina.png" alt="Piña"><h3>Piña (unidad)</h3><div class="price">L 64.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Piña" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="sandia.png" alt="Sandía"><h3>Sandía (unidad)</h3><div class="price">L 70.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Sandía" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="tomate.png" alt="Tomate"><h3>Tomate (lb)</h3><div class="price">L 18.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Tomate" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="cebolla.png" alt="Cebolla"><h3>Cebolla (lb)</h3><div class="price">L 16.80</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Cebolla" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="papa.png" alt="Papa"><h3>Papa (lb)</h3><div class="price">L 22.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Papa" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="pepino.png" alt="Pepino"><h3>Pepino (lb)</h3><div class="price">L 12.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Pepino" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="lechuga.png" alt="Lechuga"><h3>Lechuga (lb)</h3><div class="price">L 16.80</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Lechuga" class="btn-order">Pedir por WhatsApp</a></div>
-</div>
+            <!-- Producto 2 -->
+            <div class="product-card">
+                <h3>Frijoles Rojos (1 Lb)</h3>
+                <div class="product-price">L. 35.00</div>
+                <button class="btn-cart" onclick="alert('¡Producto añadido!')">Añadir al Carrito</button>
+            </div>
+            
+            <!-- Producto 3 -->
+            <div class="product-card">
+                <h3>Arroz Clasificado (1 Lb)</h3>
+                <div class="product-price">L. 18.00</div>
+                <button class="btn-cart" onclick="alert('¡Producto añadido!')">Añadir al Carrito</button>
+            </div>
+        </div>
+    </div>
 
-<!-- CATEGORÍA 3: LÁCTEOS Y HUEVOS -->
-<h2 class="category-title">Lácteos y Huevos</h2>
-<div class="container">
-    <div class="card"><img src="leche.png" alt="Leche"><h3>Leche 1 litro</h3><div class="price">L 33.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Leche%201%20litro" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="queso-fresco.png" alt="Queso"><h3>Queso fresco (lb)</h3><div class="price">L 60.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Queso%20fresco" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="mantequilla.png" alt="Mantequilla"><h3>Mantequilla</h3><div class="price">L 45.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Mantequilla" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="yogur.png" alt="Yogur"><h3>Yogur</h3><div class="price">L 28.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Yogur" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="huevos.png" alt="Huevos"><h3>Cartón de huevos (12)</h3><div class="price">L 55.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Cartón%20de%20huevos" class="btn-order">Pedir por WhatsApp</a></div>
-</div>
-
-<!-- CATEGORÍA 4: CARNES Y EMBUTIDOS -->
-<h2 class="category-title">Carnes y Embutidos</h2>
-<div class="container">
-    <div class="card"><img src="carne-res.png" alt="Carne de Res"><h3>Carne de Res (lb)</h3><div class="price">L 95.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Carne%20de%20Res" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="pollo-entero.png" alt="Pollo Entero"><h3>Pollo Entero (lb)</h3><div class="price">L 42.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Pollo%20Entero" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="chuleta-cerdo.png" alt="Chuleta de Cerdo"><h3>Chuleta de Cerdo (lb)</h3><div class="price">L 68.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Chuleta%20de%20Cerdo" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="mortadela.png" alt="Mortadela"><h3>Mortadela (lb)</h3><div class="price">L 38.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Mortadela" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="salchicha.png" alt="Salchicha"><h3>Salchicha (lb)</h3><div class="price">L 32.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Salchicha" class="btn-order">Pedir por WhatsApp</a></div>
-</div>
-
-<!-- CATEGORÍA 5: PANADERÍA -->
-<h2 class="category-title">Panadería y Repostería</h2>
-<div class="container">
-    <div class="card"><img src="pan-molde.png" alt="Pan de Molde"><h3>Pan de Molde</h3><div class="price">L 42.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Pan%20de%20Molde" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="pan-hamburguesa.png" alt="Pan de Hamburguesa"><h3>Pan de Hamburguesa</h3><div class="price">L 35.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Pan%20de%20Hamburguesa" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="semitas.png" alt="Semitas"><h3>Semitas (bolsa)</h3><div class="price">L 25.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Semitas" class="btn-order">Pedir por WhatsApp</a></div>
-</div>
-<!-- CATEGORÍA 7: CUIDADO PERSONAL -->
-<h2 class="category-title">Cuidado Personal</h2>
-<div class="container">
-    <div class="card"><img src="shampoo.png" alt="Shampoo"><h3>Shampoo (botella)</h3><div class="price">L 75.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Shampoo" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="jabon-baño.png" alt="Jabón de Baño"><h3>Jabón de Baño</h3><div class="price">L 22.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Jabón%20de%20Baño" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="crema-dental.png" alt="Crema Dental"><h3>Crema Dental</h3><div class="price">L 45.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Crema%20Dental" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="desodorante.png" alt="Desodorante"><h3>Desodorante</h3><div class="price">L 58.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Desodorante" class="btn-order">Pedir por WhatsApp</a></div>
-</div>
-
-<!-- CATEGORÍA 8: LIMPIEZA DEL HOGAR -->
-<h2 class="category-title">Limpieza del Hogar</h2>
-<div class="container">
-    <div class="card"><img src="detergente.png" alt="Detergente"><h3>Detergente (lb)</h3><div class="price">L 34.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Detergente" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="cloro.png" alt="Cloro"><h3>Cloro (botella)</h3><div class="price">L 18.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Cloro" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="desinfectante.png" alt="Desinfectante"><h3>Desinfectante Líquido</h3><div class="price">L 26.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Desinfectante" class="btn-order">Pedir por WhatsApp</a></div>
-    <div class="card"><img src="jabon-platos.png" alt="Jabón Lavalosa"><h3>Jabón para platos</h3><div class="price">L 28.00</div><a href="whatsapp://send?phone=50493428517&text=Hola,%20quiero%20ordenar%20Jabón%20para%20platos" class="btn-order">Pedir por WhatsApp</a></div>
+</body>
+</html>
