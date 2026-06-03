@@ -2,78 +2,36 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Supermercado Los Catrachos - Tu tienda en línea</title>
-    <link rel="stylesheet" href="https://cloudflare.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supermercado Los Catrachos</title>
     <style>
-        /* ========== ESTILOS BASE ========== */
+        /* ========== ESTILOS BASE TOTALMENTE SEGUROS ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s;
+            font-family: sans-serif;
         }
-        :root {
-            --bg-body: #f8f9fa;
-            --bg-card: #ffffff;
-            --text-primary: #212529;
-            --text-secondary: #495057;
-            --header-bg: #0056b3;
-            --header-text: white;
-            --border: #dee2e6;
-            --price-color: #28a745;
-            --btn-bg: #25d366;
-            --btn-hover: #20b859;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            --footer-bg: #e9ecef;
-            --badge-bg: #ffc107;
-            --badge-text: #212529;
-            --nav-bg: #004d40;
-        }
-        body.dark {
-            --bg-body: #121212;
-            --bg-card: #1e1e2f;
-            --text-primary: #f0f0f0;
-            --text-secondary: #bbbbbb;
-            --border: #2c2c3a;
-            --price-color: #6fcf97;
-            --btn-bg: #128c7e;
-            --btn-hover: #075e54;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            --footer-bg: #1a1a2a;
-            --badge-bg: #e6a700;
-            --badge-text: #121212;
-            --nav-bg: #00251a;
+        html {
+            scroll-behavior: smooth;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-primary);
-            padding-bottom: 60px;
+            background-color: #f8f9fa;
+            color: #212529;
         }
 
-        /* ========== PANTALLA DE BIENVENIDA (COMO TU IMAGEN) ========== */
+        /* ========== PANTALLA DE INICIO (IGUAL A TU IMAGEN) ========== */
         .welcome-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             background: linear-gradient(135deg, #004d40, #00796b);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
             color: white;
             text-align: center;
             padding: 20px;
-        }
-        .welcome-screen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
         }
         .welcome-logo {
             border: 2px solid #ffb300;
@@ -87,19 +45,15 @@
             color: #ffb300;
             font-size: 1.6rem;
             margin-bottom: 30px;
-            box-shadow: 0 0 0 8px rgba(255, 179, 0, 0.15);
         }
-        .welcome-screen h2 {
+        .welcome-screen h1 {
             font-size: 2.4rem;
             font-weight: bold;
             margin-bottom: 15px;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
         .welcome-screen p {
             font-size: 1.3rem;
             color: #e0f2f1;
-            margin-bottom: 5px;
         }
         .welcome-line {
             width: 200px;
@@ -111,218 +65,109 @@
         .btn-enter {
             background-color: #ffb300;
             color: #004d40;
-            border: none;
-            padding: 14px 45px;
+            padding: 15px 50px;
             font-size: 1.25rem;
             font-weight: bold;
             border-radius: 50px;
-            cursor: pointer;
+            text-decoration: none;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.2s, background-color 0.2s;
+            display: inline-block;
+            transition: transform 0.2s;
         }
         .btn-enter:hover {
-            background-color: #ffa000;
             transform: scale(1.05);
-        }
-        .btn-enter:active {
-            transform: scale(0.98);
+            background-color: #ffa000;
         }
 
-        /* ========== Navegación superior ========== */
-        .top-nav {
-            background: var(--nav-bg);
-            color: white;
-            padding: 12px 0;
-            position: sticky;
-            top: 0;
-            z-index: 300;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-        .nav-container {
+        /* ========== CONTENIDO DE LA TIENDA ========== */
+        .store-section {
+            padding: 40px 20px;
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            flex-wrap: wrap;
         }
-        .logo {
-            font-size: 1.3rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .logo i { color: var(--badge-bg); }
-        .nav-controls {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-        .dark-toggle-nav, .cart-icon-nav {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            font-size: 1.3rem;
-            padding: 8px 12px;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .dark-toggle-nav:hover, .cart-icon-nav:hover {
-            background: rgba(255,255,255,0.4);
-        }
-        .cart-icon-nav {
-            position: relative;
-        }
-        #cartCountBadgeNav {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--badge-bg);
-            color: var(--badge-text);
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            transition: transform 0.2s ease;
-        }
-
-        /* ========== Header principal ========== */
-        .main-header {
-            background-color: var(--header-bg);
-            color: var(--header-text);
+        .store-title {
             text-align: center;
-            padding: 4px 20px;
-            transition: transform 0.4s ease, opacity 0.3s ease;
-            will-change: transform;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            color: #004d40;
         }
-        .main-header.hide-header {
-            transform: translateY(-100%);
-            display: none;
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
         }
-        .logo-area {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            padding: 15px 0;
-        }
-        .logo-area i {
-            font-size: 40px;
+        .product-card {
             background: white;
-            border-radius: 50%;
-            padding: 12px;
-            color: #0056b3;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-
-        /* Buscador sticky */
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin: 0;
-            padding: 15px 20px;
-            position: sticky;
-            top: 55px;
-            z-index: 199;
-            background-color: var(--bg-body);
-            border-bottom: 1px solid var(--border);
+        .product-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #212529;
         }
-        #searchInput {
-            width: 90%;
-            max-width: 500px;
-            padding: 12px 20px;
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            box-shadow: var(--shadow);
-            outline: none;
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 15px;
         }
-
-        /* Menú lateral */
-        .menu-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: var(--header-bg);
+        .btn-cart {
+            background-color: #25d366;
             color: white;
             border: none;
-            border-radius: 50%;
-            width: 55px;
-            height: 55px;
-            font-size: 28px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
             cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        .offcanvas {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 280px;
-            height: 100%;
-            background-color: var(--bg-card);
-            z-index: 1100;
-            transition: left 0.3s;
-            padding: 20px;
-            border-right: 1px solid var(--border);
-        }
-        .offcanvas.open { left: 0; }
-        .offcanvas h3 {
-            margin-bottom: 20px;
-            color: var(--text-primary);
-            border-bottom: 2px solid var(--header-bg);
-            padding-bottom: 10px;
-        }
-        .offcanvas a {
-            display: block;
-            padding: 12px;
-            margin: 5px 0;
-            color: var(--text-primary);
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-        }
-        .offcanvas a:hover { background: var(--header-bg); color: white; }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1050;
-            display: none;
         }
-        .overlay.show { display: block; }
+    </style>
+</head>
+<body>
 
-        /* Categorías colapsables */
-        .main-content {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-        .category-section {
-            margin-bottom: 20px;
-            background: var(--bg-card);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-        .category-header {
-            background: linear-gradient(135deg, var(--header-bg), var(--nav-bg));
-            color: white;
-            padding: 15px 25px;
-            cursor: pointer;
+    <!-- PANTALLA DE INICIO (ESTILO DE TU IMAGEN) -->
+    <div class="welcome-screen">
+        <div class="welcome-logo">LCH</div>
+        <h1>Supermercado Los Catrachos</h1>
+        <p>Calidad y frescura a tu alcance</p>
+        <div class="welcome-line"></div>
+        <!-- Enlace nativo HTML que baja la pantalla sin usar JavaScript -->
+        <a href="#tienda" class="btn-enter">
+            Entrar
+        </a>
+    </div>
+
+    <!-- SECCIÓN DE LA TIENDA -->
+    <div id="tienda" class="store-section">
+        <h2 class="store-title">Nuestros Productos</h2>
+        
+        <div class="products-grid">
+            <!-- Producto 1 -->
+            <div class="product-card">
+                <h3>Bananos Maduros</h3>
+                <div class="product-price">L. 25.00</div>
+                <button class="btn-cart" onclick="alert('¡Producto añadido!')">Añadir al Carrito</button>
+            </div>
+
+            <!-- Producto 2 -->
+            <div class="product-card">
+                <h3>Frijoles Rojos (1 Lb)</h3>
+                <div class="product-price">L. 35.00</div>
+                <button class="btn-cart" onclick="alert('¡Producto añadido!')">Añadir al Carrito</button>
+            </div>
+            
+            <!-- Producto 3 -->
+            <div class="product-card">
+                <h3>Arroz Clasificado (1 Lb)</h3>
+                <div class="product-price">L. 18.00</div>
+                <button class="btn-cart" onclick="alert('¡Producto añadido!')">Añadir al Carrito</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
