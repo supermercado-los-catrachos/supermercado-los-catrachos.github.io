@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Supermercado Los Catrachos - Tu tienda en línea</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         /* ========== ESTILOS BASE ========== */
         * {
@@ -49,8 +49,9 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-body);
             color: var(--text-primary);
+            padding-bottom: 60px;
         }
-        /* ========== Navegación superior (siempre visible) ========== */
+        /* ========== Navegación superior ========== */
         .top-nav {
             background: var(--nav-bg);
             color: white;
@@ -95,7 +96,6 @@
             background: rgba(255,255,255,0.2);
             color: var(--badge-bg);
         }
-        /* Controles (carrito y modo oscuro) en la barra superior */
         .nav-controls {
             display: flex;
             gap: 12px;
@@ -131,19 +131,21 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            transition: transform 0.2s ease;
         }
-        /* ========== Header principal (ocultable al hacer scroll) ========== */
+        /* ========== Header principal ========== */
         .main-header {
             background-color: var(--header-bg);
             color: var(--header-text);
             text-align: center;
-            padding: 20px 20px;
+            padding: 4px 20px;
             transition: transform 0.4s ease, opacity 0.3s ease;
             will-change: transform;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .main-header.hide-header {
             transform: translateY(-100%);
+            display: none;
         }
         .logo-area {
             display: flex;
@@ -151,31 +153,24 @@
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
-        }
-        .logo-area img {
-            max-width: 80px;
-            height: auto;
-            border-radius: 50%;
-            background-color: white;
-            padding: 4px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            padding: 15px 0;
         }
         .logo-area i {
-            font-size: 60px;
+            font-size: 40px;
             background: white;
             border-radius: 50%;
             padding: 12px;
             color: #0056b3;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-        /* Buscador sticky (debajo de top-nav) */
+        /* Buscador sticky */
         .search-container {
             display: flex;
             justify-content: center;
             margin: 0;
             padding: 15px 20px;
             position: sticky;
-            top: 52px; /* altura del top-nav */
+            top: 55px;
             z-index: 199;
             background-color: var(--bg-body);
             border-bottom: 1px solid var(--border);
@@ -189,6 +184,7 @@
             background: var(--bg-card);
             color: var(--text-primary);
             box-shadow: var(--shadow);
+            outline: none;
         }
         /* Menú lateral */
         .menu-btn {
@@ -219,13 +215,20 @@
             border-right: 1px solid var(--border);
         }
         .offcanvas.open { left: 0; }
+        .offcanvas h3 {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--header-bg);
+            padding-bottom: 10px;
+        }
         .offcanvas a {
             display: block;
-            padding: 10px;
+            padding: 12px;
             margin: 5px 0;
             color: var(--text-primary);
             text-decoration: none;
             border-radius: 8px;
+            font-weight: 500;
         }
         .offcanvas a:hover { background: var(--header-bg); color: white; }
         .overlay {
@@ -240,8 +243,13 @@
         }
         .overlay.show { display: block; }
         /* Categorías colapsables */
+        .main-content {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
         .category-section {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             background: var(--bg-card);
             border-radius: 16px;
             overflow: hidden;
@@ -255,632 +263,62 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
         }
-        .category-header i:first-child { margin-right: 10px; }
-        .category-products {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.33, 1, 0.68, 1);
-            padding: 0 20px;
+        .category-header i.fa-chevron-down {
+            transition: transform 0.3s;
         }
-        .category-section.active .category-products {
-            max-height: 5000px;
+        .category-section.collapsed .category-header i.fa-chevron-down {
+            transform: rotate(-90deg);
+        }
+        .category-content {
+            max-height: 2000px;
+            transition: max-height 0.5s ease-in-out;
+            overflow: hidden;
+        }
+        .category-section.collapsed .category-content {
+            max-height: 0;
+        }
+        /* Cuadrícula de Productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
             padding: 20px;
         }
-        .container-products {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-        }
-        .card {
-            background: var(--bg-card);
+        .product-card {
+            background: var(--bg-body);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            width: 250px;
+            border-radius: 12px;
             padding: 15px;
             text-align: center;
             box-shadow: var(--shadow);
-            transition: transform 0.2s;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .card:hover { transform: translateY(-5px); }
-        .badge {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: var(--badge-bg);
-            color: var(--badge-text);
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-        }
-        .card img {
-            width: 100%;
+        .product-image {
+            max-width: 100%;
             height: 140px;
-            object-fit: cover;
-            border-radius: 12px;
-            background: #eaeaea;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border-radius: 8px;
         }
-        .price {
-            color: var(--price-color);
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        .btn-add {
-            background: var(--btn-bg);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 40px;
-            width: 100%;
-            cursor: pointer;
-            font-weight: bold;
+        .product-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
         }
-        /* Carrito lateral */
-        .cart-sidebar {
-            position: fixed;
-            top: 0;
-            right: -380px;
-            width: 360px;
-            height: 100%;
-            background: var(--bg-card);
-            z-index: 1200;
-            transition: right 0.3s;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            border-left: 1px solid var(--border);
-        }
-        .cart-sidebar.open { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
-        .cart-items { flex: 1; overflow-y: auto; margin: 15px 0; }
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-        .cart-total { font-weight: bold; font-size: 1.3rem; text-align: right; border-top: 2px solid var(--border); padding-top: 12px; }
-        .whatsapp-order { background: #25d366; color: white; border: none; padding: 12px; border-radius: 40px; margin-top: 15px; cursor: pointer; }
-        footer {
-            background: var(--footer-bg);
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 40px;
-            border-top: 1px solid var(--border);
-        }
-        .social-icons i { font-size: 1.8rem; margin: 0 10px; color: var(--header-bg); }
-        /* Pantalla de bienvenida */
-        .welcome-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #004d40, #00796b, #2e7d32);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        .welcome-content {
-            text-align: center;
-            animation: fadeInUp 1s ease-out;
-        }
-        .animated-logo svg { width: 120px; height: 120px; margin-bottom: 20px; }
-        .logo-path {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: drawLogo 2s ease-out forwards;
-            fill: none;
-            stroke: #fbc02d;
-            stroke-width: 2;
-        }
-        .welcome-text {
-            font-size: 3rem;
-            color: white;
-            text-shadow: 3px 3px 0 #fbc02d;
-            animation: floatText 3s infinite alternate;
-        }
-        .welcome-subtext {
-            font-size: 1.5rem;
-            color: rgba(255,255,255,0.9);
-            margin: 15px 0;
-        }
-        .loading-container {
-            width: 250px;
-            height: 6px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 10px;
-            margin: 20px auto;
-            overflow: hidden;
-        }
-        .loading-progress {
-            width: 0%;
-            height: 100%;
-            background: #fbc02d;
-            animation: loading 2.5s forwards;
-        }
-        .welcome-cta {
-            background: #fbc02d;
-            color: #004d40;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
+        .product-price {
             font-size: 1.2rem;
             font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: transform 0.2s;
+            color: var(--price-color);
+            margin-bottom: 12px;
         }
-        .welcome-cta:hover { transform: scale(1.05); }
-        @keyframes drawLogo { to { stroke-dashoffset: 0; } }
-        @keyframes floatText {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
-        }
-        @keyframes loading { to { width: 100%; } }
-        @keyframes tearTransition {
-            0% { clip-path: circle(100% at 50% 50%); opacity: 1; }
-            100% { clip-path: circle(0% at 50% 50%); opacity: 0; visibility: hidden; }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Confeti */
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #fbc02d;
-            opacity: 0;
-            animation: confettiFall 3s linear forwards;
-            pointer-events: none;
-            z-index: 9998;
-        }
-        @keyframes confettiFall {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-        /* Botón flotante WhatsApp */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #25D366;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 1000;
-            transition: 0.2s;
-        }
-        .whatsapp-float:hover { transform: scale(1.1); background: #128C7E; }
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-container { flex-direction: column; gap: 10px; }
-            .main-nav ul { justify-content: center; }
-            .search-container { top: 98px; }
-            .main-header { padding: 15px; }
-            .welcome-text { font-size: 2rem; }
-            .welcome-subtext { font-size: 1rem; }
-        }
-        @media (max-width: 600px) {
-            .cart-sidebar { width: 100%; right: -100%; }
-            .card { width: 160px; }
-            .card img { height: 100px; }
-            .search-container { top: 130px; }
-        }
-    </style>
-</head>
-<body>
-
-<!-- Pantalla de bienvenida -->
-<div class="welcome-overlay" id="welcomeOverlay">
-    <div class="welcome-content">
-        <div class="animated-logo">
-            <svg viewBox="0 0 200 200">
-                <path class="logo-path" d="M100,20 C140,20 180,40 180,100 C180,160 140,180 100,180 C60,180 20,160 20,100 C20,40 60,20 100,20 Z M100,50 C70,50 50,70 50,100 C50,130 70,150 100,150 C130,150 150,130 150,100 C150,70 130,50 100,50 Z"/>
-                <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="30" fill="#fbc02d" font-weight="bold">LCH</text>
-            </svg>
-        </div>
-        <h1 class="welcome-text">Supermercado Los Catrachos</h1>
-        <p class="welcome-subtext">Calidad y frescura a tu alcance</p>
-        <div class="loading-container"><div class="loading-progress"></div></div>
-        <button class="welcome-cta" id="welcomeCta">✨ Entrar ✨</button>
-    </div>
-</div>
-
-<!-- Contenido principal -->
-<div id="mainContent" style="display: none;">
-    <!-- Barra superior fija (siempre visible) -->
-    <div class="top-nav">
-        <div class="nav-container">
-            <div class="logo"><i class="fas fa-store"></i> Los Catrachos</div>
-            <div class="nav-controls">
-                <button class="dark-toggle-nav" id="darkModeToggleNav"><i class="fas fa-moon"></i></button>
-                <button class="cart-icon-nav" id="openCartBtnNav"><i class="fas fa-shopping-cart"></i> <span id="cartCountBadgeNav">0</span></button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Header principal (ocultable) -->
-    <div class="main-header" id="mainHeader">
-        <div class="logo-area">
-            <img src="logo.png" alt="Logo Supermercado Los Catrachos">
-            <i class="fas fa-store"></i>
-            <h1>Supermercado Los Catrachos</h1>
-        </div>
-        <p>¡Calidad y frescura a tu alcance!</p>
-    </div>
-
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="🔍 Buscar producto... (ej: arroz, leche, carne)">
-    </div>
-
-    <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
-    <div class="offcanvas" id="categoryMenu">
-        <h3><i class="fas fa-tags"></i> Categorías</h3>
-        <ul id="categoriesList"></ul>
-    </div>
-    <div class="overlay" id="overlay"></div>
-
-    <div id="productsContainer"></div>
-
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header"><h3><i class="fas fa-shopping-cart"></i> Tu pedido</h3><button class="close-cart" id="closeCartBtn">&times;</button></div>
-        <div class="cart-items" id="cartItemsList"><p style="text-align:center">Carrito vacío</p></div>
-        <div class="cart-total" id="cartTotal">Total: L 0.00</div>
-        <button class="whatsapp-order" id="whatsappOrderBtn"><i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp</button>
-    </div>
-
-    <footer id="contacto">
-        <div class="social-icons">
-            <i class="fab fa-facebook"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-whatsapp"></i>
-        </div>
-        <p>📅 Atención: Lunes a Sábado 8am - 7pm</p>
-        <p>✉️ SupermercadoLosCatrachos@gmail.com | 📞 +504 96173531</p>
-        <p>© 2025 Supermercado Los Catrachos - Calidad y confianza</p>
-    </footer>
-</div>
-
-<a href="https://wa.me/50496173531" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
-
-<script>
-    // ========== DATOS DE PRODUCTOS ==========
-    const productsData = [
-        { name: "Arroz (lb)", price: 13.00, category: "Abarrotes", img: "arroz.png", offer: false },
-        { name: "Frijoles rojos (lb)", price: 30.00, category: "Abarrotes", img: "frijoles-rojos.png", offer: false },
-        { name: "Azúcar (lb)", price: 18.00, category: "Abarrotes", img: "azucar.png", offer: false },
-        { name: "Sal (lb)", price: 12.00, category: "Abarrotes", img: "sal.png", offer: false },
-        { name: "Harina de maíz", price: 20.00, category: "Abarrotes", img: "harina-maiz.png", offer: false },
-        { name: "Café bolsa", price: 125.00, category: "Abarrotes", img: "cafe-bolsa.png", offer: true },
-        { name: "Espagueti", price: 28.00, category: "Abarrotes", img: "espagueti.png", offer: false },
-        { name: "Avena", price: 45.00, category: "Abarrotes", img: "avena.png", offer: false },
-        { name: "Manzana (lb)", price: 44.00, category: "Frutas/Verduras", img: "manzana.png", offer: false },
-        { name: "Banano (lb)", price: 9.50, category: "Frutas/Verduras", img: "banano.png", offer: true },
-        { name: "Papaya (lb)", price: 12.00, category: "Frutas/Verduras", img: "papaya.png", offer: false },
-        { name: "Piña (unidad)", price: 64.00, category: "Frutas/Verduras", img: "pina.png", offer: false },
-        { name: "Sandía (unidad)", price: 70.00, category: "Frutas/Verduras", img: "sandia.png", offer: false },
-        { name: "Tomate (lb)", price: 18.00, category: "Frutas/Verduras", img: "tomate.png", offer: false },
-        { name: "Cebolla (lb)", price: 16.80, category: "Frutas/Verduras", img: "cebolla.png", offer: false },
-        { name: "Papa (lb)", price: 22.00, category: "Frutas/Verduras", img: "papa.png", offer: false },
-        { name: "Pepino (lb)", price: 12.00, category: "Frutas/Verduras", img: "pepino.png", offer: false },
-        { name: "Lechuga (lb)", price: 16.80, category: "Frutas/Verduras", img: "lechuga.png", offer: false },
-        { name: "Leche 1 litro", price: 33.00, category: "Lacteos", img: "leche.png", offer: false },
-        { name: "Queso fresco (lb)", price: 60.00, category: "Lacteos", img: "queso-fresco.png", offer: false },
-        { name: "Mantequilla", price: 45.00, category: "Lacteos", img: "mantequilla.png", offer: false },
-        { name: "Yogurt", price: 28.00, category: "Lacteos", img: "yogur.png", offer: true },
-        { name: "Cartón de huevos (12)", price: 55.00, category: "Lacteos", img: "huevos.png", offer: false },
-        { name: "Carne de Res (lb)", price: 95.00, category: "Carnes", img: "carne-res.png", offer: false },
-        { name: "Pollo Entero (lb)", price: 42.00, category: "Carnes", img: "pollo-entero.png", offer: false },
-        { name: "Chuleta de Cerdo (lb)", price: 68.00, category: "Carnes", img: "chuleta-cerdo.png", offer: false },
-        { name: "Mortadela (lb)", price: 38.00, category: "Carnes", img: "mortadela.png", offer: false },
-        { name: "Salchicha (lb)", price: 32.00, category: "Carnes", img: "salchicha.png", offer: false },
-        { name: "Pan de Molde", price: 42.00, category: "Panaderia", img: "pan-molde.png", offer: false },
-        { name: "Pan de Hamburguesa", price: 35.00, category: "Panaderia", img: "pan-hamburguesa.png", offer: false },
-        { name: "Semitas (bolsa)", price: 25.00, category: "Panaderia", img: "semitas.png", offer: true },
-        { name: "Shampoo (botella)", price: 75.00, category: "Personal", img: "shampoo.png", offer: false },
-        { name: "Jabón de Baño", price: 22.00, category: "Personal", img: "jabon-baño.png", offer: false },
-        { name: "Crema Dental", price: 45.00, category: "Personal", img: "crema-dental.png", offer: false },
-        { name: "Desodorante", price: 58.00, category: "Personal", img: "desodorante.png", offer: false },
-        { name: "Detergente (lb)", price: 34.00, category: "Limpieza", img: "detergente.png", offer: false },
-        { name: "Cloro (botella)", price: 18.00, category: "Limpieza", img: "cloro.png", offer: false },
-        { name: "Desinfectante Líquido", price: 26.00, category: "Limpieza", img: "desinfectante.png", offer: false },
-        { name: "Jabón para platos", price: 28.00, category: "Limpieza", img: "jabon-platos.png", offer: false }
-    ];
-
-    const categoryList = ['Abarrotes', 'Frutas/Verduras', 'Lacteos', 'Carnes', 'Panaderia', 'Personal', 'Limpieza'];
-    let cart = {};
-
-    // Sincronizar badge del carrito en ambos botones (top-nav y el original)
-    function updateCartDisplay() {
-        const cartContainer = document.getElementById('cartItemsList');
-        const totalSpan = document.getElementById('cartTotal');
-        const badgeNav = document.getElementById('cartCountBadgeNav');
-        let total = 0, itemCount = 0;
-        if (Object.keys(cart).length === 0) {
-            cartContainer.innerHTML = '<p style="text-align:center">🛒 Carrito vacío</p>';
-            totalSpan.innerText = 'Total: L 0.00';
-            if (badgeNav) badgeNav.innerText = '0';
-            return;
-        }
-        let html = '';
-        for (let key in cart) {
-            const item = cart[key];
-            const subtotal = item.quantity * item.price;
-            total += subtotal;
-            itemCount += item.quantity;
-            html += `
-                <div class="cart-item">
-                    <div><strong>${item.name}</strong><br>L ${item.price.toFixed(2)} c/u</div>
-                    <div>
-                        <button onclick="changeQuantity('${key}', -1)">-</button>
-                        <span>${item.quantity}</span>
-                        <button onclick="changeQuantity('${key}', 1)">+</button>
-                        <button onclick="removeItem('${key}')" style="color:red"><i class="fas fa-trash"></i></button>
-                    </div>
-                    <div>L ${subtotal.toFixed(2)}</div>
-                </div>
-            `;
-        }
-        cartContainer.innerHTML = html;
-        totalSpan.innerText = Total: L ${total.toFixed(2)};
-        if (badgeNav) badgeNav.innerText = itemCount;
-    }
-
-    window.changeQuantity = function(productName, delta) {
-        if (cart[productName]) {
-            let newQty = cart[productName].quantity + delta;
-            if (newQty <= 0) delete cart[productName];
-            else cart[productName].quantity = newQty;
-            updateCartDisplay();
-            saveCartToLocal();
-        }
-    }
-    window.removeItem = function(productName) {
-        delete cart[productName];
-        updateCartDisplay();
-        saveCartToLocal();
-    }
-    function addToCart(product, btnElement) {
-        if (cart[product.name]) cart[product.name].quantity += 1;
-        else cart[product.name] = { name: product.name, price: product.price, quantity: 1 };
-        updateCartDisplay();
-        saveCartToLocal();
-        if (btnElement) {
-            const originalHTML = btnElement.innerHTML;
-            btnElement.innerHTML = '<i class="fas fa-check"></i> Añadido';
-            setTimeout(() => { btnElement.innerHTML = originalHTML; }, 1500);
-        }
-        createConfetti();
-    }
-    function saveCartToLocal() { localStorage.setItem('superCart', JSON.stringify(cart)); }
-    function loadCartFromLocal() {
-        const saved = localStorage.getItem('superCart');
-        if (saved) { cart = JSON.parse(saved); updateCartDisplay(); }
-    }
-
-    function createConfetti() {
-        for (let i = 0; i < 60; i++) {
-            const conf = document.createElement('div');
-            conf.className = 'confetti';
-            conf.style.left = Math.random() * 100 + 'vw';
-            conf.style.backgroundColor = hsl(${Math.random() * 60 + 30}, 100%, 50%);
-            conf.style.width = Math.random() * 12 + 5 + 'px';
-            conf.style.height = conf.style.width;
-            conf.style.animationDuration = Math.random() * 2 + 2 + 's';
-            document.body.appendChild(conf);
-            setTimeout(() => conf.remove(), 5000);
-        }
-    }
-
-    // RENDERIZADO DE PRODUCTOS
-    let currentSearch = '';
-    let currentCategory = 'Todos';
-    function renderProducts() {
-        const container = document.getElementById('productsContainer');
-        let filtered = productsData.filter(p => {
-            const matchSearch = p.name.toLowerCase().includes(currentSearch.toLowerCase());
-            const matchCat = (currentCategory === 'Todos' || p.category === currentCategory);
-            return matchSearch && matchCat;
-        });
-        const grouped = {};
-        filtered.forEach(p => { if (!grouped[p.category]) grouped[p.category] = []; grouped[p.category].push(p); });
-        let html = '';
-        for (let cat of categoryList) {
-            if (grouped[cat] && grouped[cat].length > 0) {
-                html += `
-                    <div class="category-section" data-category="${cat}">
-                        <div class="category-header" onclick="toggleCategory(this.parentElement)">
-                            <span><i class="fas ${getIconForCategory(cat)}"></i> ${cat}</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="category-products">
-                            <div class="container-products">
-                `;
-                grouped[cat].forEach(prod => {
-                    const escapedName = prod.name.replace(/"/g, '&quot;');
-                    html += `
-                        <div class="card" data-product-name="${escapedName}" data-product-price="${prod.price}" data-product-img="${prod.img}" data-product-offer="${prod.offer}">
-                            ${prod.offer ? '<span class="badge">🔥 OFERTA</span>' : ''}
-                            <img src="${prod.img}" alt="${prod.name}">
-                            <h3>${prod.name}</h3>
-                            <div class="price">L ${prod.price.toFixed(2)}</div>
-                            <button class="btn-add">
-                                <i class="fas fa-cart-plus"></i> Agregar
-                            </button>
-                        </div>
-                    `;
-                });
-                html += </div></div></div>;
-            }
-        }
-        if (filtered.length === 0) html = <div style="text-align:center; margin:50px"><i class="fas fa-search"></i> No se encontraron productos.</div>;
-        container.innerHTML = html;
-        const firstCat = document.querySelector('.category-section');
-        if (firstCat) firstCat.classList.add('active');
-    }
-
-    // Event listener para botones Agregar (delegado)
-    document.getElementById('productsContainer').addEventListener('click', (e) => {
-        const btn = e.target.closest('.btn-add');
-        if (!btn) return;
-        const card = btn.closest('.card');
-        if (!card) return;
-        const name = card.getAttribute('data-product-name');
-        const price = parseFloat(card.getAttribute('data-product-price'));
-        const img = card.getAttribute('data-product-img');
-        const offer = card.getAttribute('data-product-offer') === 'true';
-        if (name && !isNaN(price)) {
-            const product = { name, price, img, offer };
-            addToCart(product, btn);
-        }
-    });
-
-    function getIconForCategory(cat) {
-        const icons = {
-            'Abarrotes': 'fa-box',
-            'Frutas/Verduras': 'fa-apple-alt',
-            'Lacteos': 'fa-cheese',
-            'Carnes': 'fa-drumstick-bite',
-            'Panaderia': 'fa-bread-slice',
-            'Personal': 'fa-user',
-            'Limpieza': 'fa-broom'
-        };
-        return icons[cat] || 'fa-tag';
-    }
-
-    window.toggleCategory = function(el) {
-        el.classList.toggle('active');
-        const icon = el.querySelector('.fa-chevron-down');
-        if (icon) icon.classList.toggle('fa-rotate-180');
-    };
-
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-        currentSearch = e.target.value;
-        renderProducts();
-    });
-
-    function buildCategoryMenu() {
-        const ul = document.getElementById('categoriesList');
-        ul.innerHTML = '';
-        const allCat = ['Todos', ...categoryList];
-        allCat.forEach(cat => {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.href = '#';
-            a.textContent = cat === 'Todos' ? '📋 Todos los productos' : cat;
-            a.setAttribute('data-cat', cat);
-            a.addEventListener('click', (e) => {
-                e.preventDefault();
-                currentCategory = cat;
-                renderProducts();
-                closeMenu();
-            });
-            li.appendChild(a);
-            ul.appendChild(li);
-        });
-    }
-
-    function openMenu() { document.getElementById('categoryMenu').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
-    function closeMenu() { document.getElementById('categoryMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
-    document.getElementById('menuBtn').addEventListener('click', openMenu);
-    document.getElementById('overlay').addEventListener('click', closeMenu);
-    
-    // Funciones del carrito (abrir/cerrar) usando ambos botones
-    function openCart() { document.getElementById('cartSidebar').classList.add('open'); }
-    function closeCart() { document.getElementById('cartSidebar').classList.remove('open'); }
-    document.getElementById('openCartBtnNav').addEventListener('click', openCart);
-    document.getElementById('closeCartBtn').addEventListener('click', closeCart);
-    // Si aún existe el botón original (lo eliminamos del header, pero por si acaso)
-    const oldCartBtn = document.getElementById('openCartBtn');
-    if (oldCartBtn) oldCartBtn.addEventListener('click', openCart);
-
-    document.getElementById('whatsappOrderBtn').addEventListener('click', () => {
-        if (Object.keys(cart).length === 0) { alert('Agrega productos al carrito primero'); return; }
-        let message = 'Hola, quiero hacer el siguiente pedido:\n';
-        let total = 0;
-        for (let key in cart) {
-            const item = cart[key];
-            const subtotal = item.price * item.quantity;
-            total += subtotal;
-            message += ${item.quantity}x ${item.name} - L ${subtotal.toFixed(2)}\n;
-        }
-        message += \n📍 Total: L ${total.toFixed(2)}\n📦 Entregar a domicilio.;
-        window.open(https://wa.me/50496173531?text=${encodeURIComponent(message)}, '_blank');
-    });
-
-    // Modo oscuro (ambos botones)
-    function applyDarkMode() {
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark');
-        } else {
-            document.body.classList.remove('dark');
-        }
-    }
-    const darkToggleNav = document.getElementById('darkModeToggleNav');
-    if (darkToggleNav) {
-        darkToggleNav.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            localStorage.setItem('darkMode', document.body.classList.contains('dark') ? 'enabled' : 'disabled');
-        });
-    }
-    applyDarkMode();
-
-    // Smooth scrolling para enlaces de navegación
-    document.querySelectorAll('.main-nav a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetEl = document.getElementById(targetId);
-            if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-
-    // Pantalla de bienvenida
-    document.getElementById('welcomeCta').addEventListener('click', () => {
-        const welcome = document.getElementById('welcomeOverlay');
-        welcome.style.animation = 'tearTransition 0.8s ease forwards';
-        setTimeout(() => {
-            welcome.style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
-            createConfetti();
-        }, 800);
-    });
-
-    // ========== EFECTO DE OCULTAR/MOSTRAR HEADER AL HACER SCROLL ==========
-    let lastScrollTop = 0;
-    const mainHeader = document.getElementById('mainHeader');
-    window.addEventListener('scroll', function() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollTop > 100) { // Si baja más de 100px
-            if (!mainHeader.classList.contains('hide-header')) {
-                mainHeader.classList.add('hide-header');
-            }
-        } else {
-            if (mainHeader.classList.contains('hide-header')) {
-                mainHeader.classList.remove('hide-header');
-            }
-        }
-        lastScrollTop = scrollTop;
-    });
-
-    loadCartFromLocal();
-    buildCategoryMenu();
-    renderProducts();
-</script>
-</body>
-</html>
+        .btn-add-cart {
