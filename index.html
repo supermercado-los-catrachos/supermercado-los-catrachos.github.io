@@ -51,6 +51,86 @@
             color: var(--text-primary);
             padding-bottom: 60px;
         }
+
+        /* ========== PANTALLA DE BIENVENIDA (COMO TU IMAGEN) ========== */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #004d40, #00796b);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .welcome-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .welcome-logo {
+            border: 2px solid #ffb300;
+            border-radius: 50%;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #ffb300;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            box-shadow: 0 0 0 8px rgba(255, 179, 0, 0.15);
+        }
+        .welcome-screen h2 {
+            font-size: 2.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .welcome-screen p {
+            font-size: 1.3rem;
+            color: #e0f2f1;
+            margin-bottom: 5px;
+        }
+        .welcome-line {
+            width: 200px;
+            height: 4px;
+            background-color: #ffb300;
+            border-radius: 2px;
+            margin: 15px auto 35px auto;
+        }
+        .btn-enter {
+            background-color: #ffb300;
+            color: #004d40;
+            border: none;
+            padding: 14px 45px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-enter:hover {
+            background-color: #ffa000;
+            transform: scale(1.05);
+        }
+        .btn-enter:active {
+            transform: scale(0.98);
+        }
+
         /* ========== Navegación superior ========== */
         .top-nav {
             background: var(--nav-bg);
@@ -78,24 +158,6 @@
             gap: 8px;
         }
         .logo i { color: var(--badge-bg); }
-        .main-nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .main-nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 30px;
-            transition: 0.2s;
-        }
-        .main-nav a:hover {
-            background: rgba(255,255,255,0.2);
-            color: var(--badge-bg);
-        }
         .nav-controls {
             display: flex;
             gap: 12px;
@@ -133,6 +195,7 @@
             font-weight: bold;
             transition: transform 0.2s ease;
         }
+
         /* ========== Header principal ========== */
         .main-header {
             background-color: var(--header-bg);
@@ -163,6 +226,7 @@
             color: #0056b3;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
+
         /* Buscador sticky */
         .search-container {
             display: flex;
@@ -186,6 +250,7 @@
             box-shadow: var(--shadow);
             outline: none;
         }
+
         /* Menú lateral */
         .menu-btn {
             position: fixed;
@@ -242,6 +307,7 @@
             display: none;
         }
         .overlay.show { display: block; }
+
         /* Categorías colapsables */
         .main-content {
             max-width: 1200px;
@@ -260,65 +326,3 @@
             color: white;
             padding: 15px 25px;
             cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        .category-header i.fa-chevron-down {
-            transition: transform 0.3s;
-        }
-        .category-section.collapsed .category-header i.fa-chevron-down {
-            transform: rotate(-90deg);
-        }
-        .category-content {
-            max-height: 2000px;
-            transition: max-height 0.5s ease-in-out;
-            overflow: hidden;
-        }
-        .category-section.collapsed .category-content {
-            max-height: 0;
-        }
-        /* Cuadrícula de Productos */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-        .product-card {
-            background: var(--bg-body);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .product-image {
-            max-width: 100%;
-            height: 140px;
-            object-fit: contain;
-            margin-bottom: 10px;
-            border-radius: 8px;
-        }
-        .product-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .product-price {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--price-color);
-            margin-bottom: 12px;
-        }
-        .btn-add-cart {
