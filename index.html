@@ -77,25 +77,6 @@
             gap: 8px;
         }
         .logo i { color: var(--badge-bg); }
-        .main-nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .main-nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 30px;
-            transition: 0.2s;
-        }
-        .main-nav a:hover {
-            background: rgba(255,255,255,0.2);
-            color: var(--badge-bg);
-        }
-        /* Controles (carrito y modo oscuro) en la barra superior */
         .nav-controls {
             display: flex;
             gap: 12px;
@@ -132,18 +113,13 @@
             justify-content: center;
             font-weight: bold;
         }
-        /* ========== Header principal (ocultable al hacer scroll) ========== */
+        /* ========== Header principal ========== */
         .main-header {
             background-color: var(--header-bg);
             color: var(--header-text);
             text-align: center;
             padding: 20px 20px;
-            transition: transform 0.4s ease, opacity 0.3s ease;
-            will-change: transform;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .main-header.hide-header {
-            transform: translateY(-100%);
         }
         .logo-area {
             display: flex;
@@ -168,14 +144,14 @@
             color: #0056b3;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-        /* Buscador sticky (debajo de top-nav) */
+        /* Buscador sticky */
         .search-container {
             display: flex;
             justify-content: center;
             margin: 0;
             padding: 15px 20px;
             position: sticky;
-            top: 52px; /* altura del top-nav */
+            top: 52px;
             z-index: 199;
             background-color: var(--bg-body);
             border-bottom: 1px solid var(--border);
@@ -219,13 +195,21 @@
             border-right: 1px solid var(--border);
         }
         .offcanvas.open { left: 0; }
+        .offcanvas h3 {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        .offcanvas ul {
+            list-style: none;
+        }
         .offcanvas a {
             display: block;
-            padding: 10px;
+            padding: 12px;
             margin: 5px 0;
             color: var(--text-primary);
             text-decoration: none;
             border-radius: 8px;
+            font-weight: 500;
         }
         .offcanvas a:hover { background: var(--header-bg); color: white; }
         .overlay {
@@ -239,7 +223,13 @@
             display: none;
         }
         .overlay.show { display: block; }
-        /* Categorías colapsables */
+        
+        /* Categorías y Productos */
+        #productsContainer {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
         .category-section {
             margin-bottom: 30px;
             background: var(--bg-card);
@@ -287,6 +277,11 @@
             position: relative;
         }
         .card:hover { transform: translateY(-5px); }
+        .card h3 {
+            font-size: 1.1rem;
+            margin: 10px 0 5px 0;
+            color: var(--text-primary);
+        }
         .badge {
             position: absolute;
             top: 12px;
@@ -296,6 +291,7 @@
             padding: 4px 8px;
             border-radius: 20px;
             font-size: 0.7rem;
+            font-weight: bold;
         }
         .card img {
             width: 100%;
@@ -324,6 +320,8 @@
             justify-content: center;
             gap: 8px;
         }
+        .btn-add:hover { background-color: var(--btn-hover); }
+
         /* Carrito lateral */
         .cart-sidebar {
             position: fixed;
@@ -338,13 +336,19 @@
             display: flex;
             flex-direction: column;
             border-left: 1px solid var(--border);
+            box-shadow: -4px 0 10px rgba(0,0,0,0.1);
         }
         .cart-sidebar.open { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+        .cart-header h3 { color: var(--text-primary); }
+        .close-cart { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--text-primary); }
         .cart-items { flex: 1; overflow-y: auto; margin: 15px 0; }
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-        .cart-total { font-weight: bold; font-size: 1.3rem; text-align: right; border-top: 2px solid var(--border); padding-top: 12px; }
-        .whatsapp-order { background: #25d366; color: white; border: none; padding: 12px; border-radius: 40px; margin-top: 15px; cursor: pointer; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); font-size: 0.95rem;}
+        .cart-item button { padding: 2px 8px; margin: 0 2px; cursor: pointer; background: var(--border); border: none; border-radius: 4px; color: var(--text-primary); }
+        .cart-total { font-weight: bold; font-size: 1.3rem; text-align: right; border-top: 2px solid var(--border); padding-top: 12px; color: var(--text-primary); }
+        .whatsapp-order { background: #25d366; color: white; border: none; padding: 12px; border-radius: 40px; margin-top: 15px; cursor: pointer; font-weight: bold; width: 100%; }
+        .whatsapp-order:hover { background: #20b859; }
+
         footer {
             background: var(--footer-bg);
             text-align: center;
@@ -352,7 +356,9 @@
             margin-top: 40px;
             border-top: 1px solid var(--border);
         }
-        .social-icons i { font-size: 1.8rem; margin: 0 10px; color: var(--header-bg); }
+        footer p { margin: 8px 0; color: var(--text-secondary); }
+        .social-icons i { font-size: 1.8rem; margin: 0 10px; color: var(--header-bg); cursor: pointer; }
+
         /* Pantalla de bienvenida */
         .welcome-overlay {
             position: fixed;
@@ -366,6 +372,7 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
         .welcome-content {
             text-align: center;
@@ -383,7 +390,7 @@
         .welcome-text {
             font-size: 3rem;
             color: white;
-            text-shadow: 3px 3px 0 #fbc02d;
+            text-shadow: 3px 3px 0 #00251a;
             animation: floatText 3s infinite alternate;
         }
         .welcome-subtext {
@@ -418,26 +425,23 @@
             transition: transform 0.2s;
         }
         .welcome-cta:hover { transform: scale(1.05); }
+
         @keyframes drawLogo { to { stroke-dashoffset: 0; } }
         @keyframes floatText {
             0% { transform: translateY(0); }
             100% { transform: translateY(-10px); }
         }
         @keyframes loading { to { width: 100%; } }
-        @keyframes tearTransition {
-            0% { clip-path: circle(100% at 50% 50%); opacity: 1; }
-            100% { clip-path: circle(0% at 50% 50%); opacity: 0; visibility: hidden; }
-        }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         /* Confeti */
         .confetti {
             position: fixed;
             width: 10px;
             height: 10px;
-            background: #fbc02d;
             opacity: 0;
             animation: confettiFall 3s linear forwards;
             pointer-events: none;
@@ -447,6 +451,7 @@
             0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
+
         /* Botón flotante WhatsApp */
         .whatsapp-float {
             position: fixed;
@@ -466,10 +471,10 @@
             transition: 0.2s;
         }
         .whatsapp-float:hover { transform: scale(1.1); background: #128C7E; }
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav-container { flex-direction: column; gap: 10px; }
-            .main-nav ul { justify-content: center; }
             .search-container { top: 98px; }
             .main-header { padding: 15px; }
             .welcome-text { font-size: 2rem; }
@@ -485,7 +490,6 @@
 </head>
 <body>
 
-<!-- Pantalla de bienvenida -->
 <div class="welcome-overlay" id="welcomeOverlay">
     <div class="welcome-content">
         <div class="animated-logo">
@@ -501,9 +505,7 @@
     </div>
 </div>
 
-<!-- Contenido principal -->
 <div id="mainContent" style="display: none;">
-    <!-- Barra superior fija (siempre visible) -->
     <div class="top-nav">
         <div class="nav-container">
             <div class="logo"><i class="fas fa-store"></i> Los Catrachos</div>
@@ -514,10 +516,8 @@
         </div>
     </div>
 
-    <!-- Header principal (ocultable) -->
     <div class="main-header" id="mainHeader">
         <div class="logo-area">
-            <img src="logo.png" alt="Logo Supermercado Los Catrachos">
             <i class="fas fa-store"></i>
             <h1>Supermercado Los Catrachos</h1>
         </div>
@@ -529,6 +529,7 @@
     </div>
 
     <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+    
     <div class="offcanvas" id="categoryMenu">
         <h3><i class="fas fa-tags"></i> Categorías</h3>
         <ul id="categoriesList"></ul>
@@ -538,8 +539,13 @@
     <div id="productsContainer"></div>
 
     <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header"><h3><i class="fas fa-shopping-cart"></i> Tu pedido</h3><button class="close-cart" id="closeCartBtn">&times;</button></div>
-        <div class="cart-items" id="cartItemsList"><p style="text-align:center">Carrito vacío</p></div>
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Tu pedido</h3>
+            <button class="close-cart" id="closeCartBtn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItemsList">
+            <p style="text-align:center">Carrito vacío</p>
+        </div>
         <div class="cart-total" id="cartTotal">Total: L 0.00</div>
         <button class="whatsapp-order" id="whatsappOrderBtn"><i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp</button>
     </div>
@@ -552,7 +558,7 @@
         </div>
         <p>📅 Atención: Lunes a Sábado 8am - 7pm</p>
         <p>✉️ SupermercadoLosCatrachos@gmail.com | 📞 +504 96173531</p>
-        <p>© 2025 Supermercado Los Catrachos - Calidad y confianza</p>
+        <p>© 2026 Supermercado Los Catrachos - Calidad y confianza</p>
     </footer>
 </div>
 
@@ -571,7 +577,7 @@
         { name: "Avena", price: 45.00, category: "Abarrotes", img: "avena.png", offer: false },
         { name: "Manzana (lb)", price: 44.00, category: "Frutas/Verduras", img: "manzana.png", offer: false },
         { name: "Banano (lb)", price: 9.50, category: "Frutas/Verduras", img: "banano.png", offer: true },
-        { name: "Papaya (lb)", price: 12.00, category: "Frutas/Verduras", img: "papaya.png", offer: false },
+        { name: "Papaya (lb)", price: 12.00, category: "Frutas/Verwuras", img: "papaya.png", offer: false },
         { name: "Piña (unidad)", price: 64.00, category: "Frutas/Verduras", img: "pina.png", offer: false },
         { name: "Sandía (unidad)", price: 70.00, category: "Frutas/Verduras", img: "sandia.png", offer: false },
         { name: "Tomate (lb)", price: 18.00, category: "Frutas/Verduras", img: "tomate.png", offer: false },
@@ -605,18 +611,20 @@
     const categoryList = ['Abarrotes', 'Frutas/Verduras', 'Lacteos', 'Carnes', 'Panaderia', 'Personal', 'Limpieza'];
     let cart = {};
 
-    // Sincronizar badge del carrito en ambos botones (top-nav y el original)
+    // ========== CONTROL DE VISTA DE CARRITO ==========
     function updateCartDisplay() {
         const cartContainer = document.getElementById('cartItemsList');
         const totalSpan = document.getElementById('cartTotal');
         const badgeNav = document.getElementById('cartCountBadgeNav');
         let total = 0, itemCount = 0;
+        
         if (Object.keys(cart).length === 0) {
             cartContainer.innerHTML = '<p style="text-align:center">🛒 Carrito vacío</p>';
             totalSpan.innerText = 'Total: L 0.00';
             if (badgeNav) badgeNav.innerText = '0';
             return;
         }
+        
         let html = '';
         for (let key in cart) {
             const item = cart[key];
@@ -630,14 +638,14 @@
                         <button onclick="changeQuantity('${key}', -1)">-</button>
                         <span>${item.quantity}</span>
                         <button onclick="changeQuantity('${key}', 1)">+</button>
-                        <button onclick="removeItem('${key}')" style="color:red"><i class="fas fa-trash"></i></button>
+                        <button onclick="removeItem('${key}')" style="color:red; background:none;"><i class="fas fa-trash"></i></button>
                     </div>
                     <div>L ${subtotal.toFixed(2)}</div>
                 </div>
             `;
         }
         cartContainer.innerHTML = html;
-        totalSpan.innerText = Total: L ${total.toFixed(2)};
+        totalSpan.innerText = `Total: L ${total.toFixed(2)}`;
         if (badgeNav) badgeNav.innerText = itemCount;
     }
 
@@ -650,16 +658,19 @@
             saveCartToLocal();
         }
     }
+
     window.removeItem = function(productName) {
         delete cart[productName];
         updateCartDisplay();
         saveCartToLocal();
     }
+
     function addToCart(product, btnElement) {
         if (cart[product.name]) cart[product.name].quantity += 1;
         else cart[product.name] = { name: product.name, price: product.price, quantity: 1 };
         updateCartDisplay();
         saveCartToLocal();
+        
         if (btnElement) {
             const originalHTML = btnElement.innerHTML;
             btnElement.innerHTML = '<i class="fas fa-check"></i> Añadido';
@@ -667,6 +678,7 @@
         }
         createConfetti();
     }
+
     function saveCartToLocal() { localStorage.setItem('superCart', JSON.stringify(cart)); }
     function loadCartFromLocal() {
         const saved = localStorage.getItem('superCart');
@@ -674,22 +686,23 @@
     }
 
     function createConfetti() {
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 40; i++) {
             const conf = document.createElement('div');
             conf.className = 'confetti';
             conf.style.left = Math.random() * 100 + 'vw';
-            conf.style.backgroundColor = hsl(${Math.random() * 60 + 30}, 100%, 50%);
-            conf.style.width = Math.random() * 12 + 5 + 'px';
+            conf.style.backgroundColor = `hsl(${Math.random() * 60 + 30}, 100%, 50%)`;
+            conf.style.width = Math.random() * 8 + 5 + 'px';
             conf.style.height = conf.style.width;
-            conf.style.animationDuration = Math.random() * 2 + 2 + 's';
+            conf.style.animationDuration = Math.random() * 1.5 + 1.5 + 's';
             document.body.appendChild(conf);
-            setTimeout(() => conf.remove(), 5000);
+            setTimeout(() => conf.remove(), 3000);
         }
     }
 
-    // RENDERIZADO DE PRODUCTOS
+    // ========== RENDERIZADO DE PRODUCTOS ==========
     let currentSearch = '';
     let currentCategory = 'Todos';
+
     function renderProducts() {
         const container = document.getElementById('productsContainer');
         let filtered = productsData.filter(p => {
@@ -697,8 +710,10 @@
             const matchCat = (currentCategory === 'Todos' || p.category === currentCategory);
             return matchSearch && matchCat;
         });
+
         const grouped = {};
         filtered.forEach(p => { if (!grouped[p.category]) grouped[p.category] = []; grouped[p.category].push(p); });
+
         let html = '';
         for (let cat of categoryList) {
             if (grouped[cat] && grouped[cat].length > 0) {
@@ -716,7 +731,7 @@
                     html += `
                         <div class="card" data-product-name="${escapedName}" data-product-price="${prod.price}" data-product-img="${prod.img}" data-product-offer="${prod.offer}">
                             ${prod.offer ? '<span class="badge">🔥 OFERTA</span>' : ''}
-                            <img src="${prod.img}" alt="${prod.name}">
+                            <img src="${prod.img}" alt="${prod.name}" onerror="this.src='https://via.placeholder.com/250x140?text=${prod.name}'">
                             <h3>${prod.name}</h3>
                             <div class="price">L ${prod.price.toFixed(2)}</div>
                             <button class="btn-add">
@@ -725,16 +740,17 @@
                         </div>
                     `;
                 });
-                html += </div></div></div>;
+                html += `</div></div></div>`;
             }
         }
-        if (filtered.length === 0) html = <div style="text-align:center; margin:50px"><i class="fas fa-search"></i> No se encontraron productos.</div>;
+        if (filtered.length === 0) html = `<div style="text-align:center; margin:50px; color: var(--text-primary);"><i class="fas fa-search" font-size: 2rem;></i><p>No se encontraron productos.</p></div>`;
         container.innerHTML = html;
+
         const firstCat = document.querySelector('.category-section');
         if (firstCat) firstCat.classList.add('active');
     }
 
-    // Event listener para botones Agregar (delegado)
+    // Delegación de eventos para botones Agregar
     document.getElementById('productsContainer').addEventListener('click', (e) => {
         const btn = e.target.closest('.btn-add');
         if (!btn) return;
@@ -742,10 +758,8 @@
         if (!card) return;
         const name = card.getAttribute('data-product-name');
         const price = parseFloat(card.getAttribute('data-product-price'));
-        const img = card.getAttribute('data-product-img');
-        const offer = card.getAttribute('data-product-offer') === 'true';
         if (name && !isNaN(price)) {
-            const product = { name, price, img, offer };
+            const product = { name, price };
             addToCart(product, btn);
         }
     });
@@ -795,92 +809,62 @@
         });
     }
 
-    function openMenu() { document.getElementById('categoryMenu').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
-    function closeMenu() { document.getElementById('categoryMenu').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
-    document.getElementById('menuBtn').addEventListener('click', openMenu);
-    document.getElementById('overlay').addEventListener('click', closeMenu);
+    // ========== NAVEGACIÓN Y MENÚS ==========
+    const categoryMenu = document.getElementById('categoryMenu');
+    const overlay = document.getElementById('overlay');
+    const cartSidebar = document.getElementById('cartSidebar');
+
+    function openMenu() { categoryMenu.classList.add('open'); overlay.classList.add('show'); }
+    function closeMenu() { categoryMenu.classList.remove('open'); if(!cartSidebar.classList.contains('open')) overlay.classList.remove('show'); }
     
-    // Funciones del carrito (abrir/cerrar) usando ambos botones
-    function openCart() { document.getElementById('cartSidebar').classList.add('open'); }
-    function closeCart() { document.getElementById('cartSidebar').classList.remove('open'); }
+    function openCart() { cartSidebar.classList.add('open'); overlay.classList.add('show'); }
+    function closeCart() { cartSidebar.classList.remove('open'); if(!categoryMenu.classList.contains('open')) overlay.classList.remove('show'); }
+
+    document.getElementById('menuBtn').addEventListener('click', openMenu);
+    document.getElementById('overlay').addEventListener('click', () => { closeMenu(); closeCart(); });
     document.getElementById('openCartBtnNav').addEventListener('click', openCart);
     document.getElementById('closeCartBtn').addEventListener('click', closeCart);
-    // Si aún existe el botón original (lo eliminamos del header, pero por si acaso)
-    const oldCartBtn = document.getElementById('openCartBtn');
-    if (oldCartBtn) oldCartBtn.addEventListener('click', openCart);
 
+    // ========== MODO OSCURO ==========
+    const darkModeBtn = document.getElementById('darkModeToggleNav');
+    darkModeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        const isDark = document.body.classList.contains('dark');
+        darkModeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+
+    // ========== ENVIAR PEDIDO POR WHATSAPP ==========
     document.getElementById('whatsappOrderBtn').addEventListener('click', () => {
-        if (Object.keys(cart).length === 0) { alert('Agrega productos al carrito primero'); return; }
-        let message = 'Hola, quiero hacer el siguiente pedido:\n';
+        if (Object.keys(cart).length === 0) { alert('El carrito está vacío'); return; }
+        let text = '🛒 *Nuevo Pedido - Supermercado Los Catrachos*\n\n';
         let total = 0;
         for (let key in cart) {
             const item = cart[key];
-            const subtotal = item.price * item.quantity;
-            total += subtotal;
-            message += ${item.quantity}x ${item.name} - L ${subtotal.toFixed(2)}\n;
+            const sub = item.price * item.quantity;
+            total += sub;
+            text += `• *${item.quantity}x* ${item.name} (L ${item.price.toFixed(2)} c/u) -> *L ${sub.toFixed(2)}*\n`;
         }
-        message += \n📍 Total: L ${total.toFixed(2)}\n📦 Entregar a domicilio.;
-        window.open(https://wa.me/50496173531?text=${encodeURIComponent(message)}, '_blank');
+        text += `\n💰 *Total a pagar: L ${total.toFixed(2)}*`;
+        const url = `https://wa.me/50496173531?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
     });
 
-    // Modo oscuro (ambos botones)
-    function applyDarkMode() {
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark');
-        } else {
-            document.body.classList.remove('dark');
-        }
-    }
-    const darkToggleNav = document.getElementById('darkModeToggleNav');
-    if (darkToggleNav) {
-        darkToggleNav.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            localStorage.setItem('darkMode', document.body.classList.contains('dark') ? 'enabled' : 'disabled');
-        });
-    }
-    applyDarkMode();
-
-    // Smooth scrolling para enlaces de navegación
-    document.querySelectorAll('.main-nav a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetEl = document.getElementById(targetId);
-            if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-
-    // Pantalla de bienvenida
-    document.getElementById('welcomeCta').addEventListener('click', () => {
-        const welcome = document.getElementById('welcomeOverlay');
-        welcome.style.animation = 'tearTransition 0.8s ease forwards';
+    // ========== PANTALLA DE BIENVENIDA ==========
+    const entrarAlSitio = () => {
+        document.getElementById('welcomeOverlay').style.opacity = '0';
+        document.getElementById('welcomeOverlay').style.transform = 'scale(0.9)';
         setTimeout(() => {
-            welcome.style.display = 'none';
+            document.getElementById('welcomeOverlay').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
-            createConfetti();
-        }, 800);
-    });
+            renderProducts();
+            buildCategoryMenu();
+            loadCartFromLocal();
+        }, 500);
+    };
 
-    // ========== EFECTO DE OCULTAR/MOSTRAR HEADER AL HACER SCROLL ==========
-    let lastScrollTop = 0;
-    const mainHeader = document.getElementById('mainHeader');
-    window.addEventListener('scroll', function() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollTop > 100) { // Si baja más de 100px
-            if (!mainHeader.classList.contains('hide-header')) {
-                mainHeader.classList.add('hide-header');
-            }
-        } else {
-            if (mainHeader.classList.contains('hide-header')) {
-                mainHeader.classList.remove('hide-header');
-            }
-        }
-        lastScrollTop = scrollTop;
-    });
-
-    loadCartFromLocal();
-    buildCategoryMenu();
-    renderProducts();
+    document.getElementById('welcomeCta').addEventListener('click', entrarAlSitio);
+    // Simular carga automática del progreso y habilitación segura
+    setTimeout(entrarAlSitio, 2600);
 </script>
 </body>
 </html>
